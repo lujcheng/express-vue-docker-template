@@ -1,7 +1,6 @@
 const express = require('express')
 const app = express()
 const port = process.env.PORT || 8080
-const router = express.Router()
 
 app.use(express.static(`${__dirname}/dist`)) 
 
@@ -9,11 +8,21 @@ app.engine('.html', require('ejs').renderFile)
 
 app.set('views', `${__dirname}/dist`)
 
-router.get('/*', (req, res, next) => {
+app.get('/', (req, res) => {
   res.sendFile(`${__dirname}/dist/index.html`)
 })
 
-app.use('/', router)
+app.post('/', (req, res) => {
+  return res.send('Received a POST HTTP method');
+});
+ 
+app.put('/', (req, res) => {
+  return res.send('Received a PUT HTTP method');
+});
+ 
+app.delete('/', (req, res) => {
+  return res.send('Received a DELETE HTTP method');
+});
 
 app.listen(port)
 console.log('App running on port', port)
