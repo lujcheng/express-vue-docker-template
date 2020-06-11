@@ -1,15 +1,17 @@
 const express = require('express')
+const path = require('path')
 const app = express()
 const port = process.env.PORT || 8080
 
-app.use(express.static(`${__dirname}/dist`)) 
+const parentDir = path.resolve(__dirname, '..')
+app.use(express.static(`${parentDir}/dist`)) 
 
 app.engine('.html', require('ejs').renderFile)
 
-app.set('views', `${__dirname}/dist`)
+app.set('views', `${parentDir}/dist`)
 
 app.get('/', (req, res) => {
-  res.sendFile(`${__dirname}/dist/index.html`)
+  res.sendFile(`${parentDir}/dist/index.html`)
 })
 
 app.post('/', (req, res) => {
